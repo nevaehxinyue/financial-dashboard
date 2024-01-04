@@ -5,6 +5,7 @@ import Pagination from '@/app/ui/invoices/pagination';
 import InvoicesTable from '@/app/ui/invoices/table';
 import Search from '@/app/ui/search';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import { Metadata } from 'next';
 import { Suspense } from 'react';
 
 
@@ -40,3 +41,7 @@ const Page = async ({ searchParams }: Props) => {
 };
 
 export default Page;
+
+export const metadata: Metadata = {
+  title: 'Invoices',
+}
