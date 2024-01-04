@@ -1,6 +1,7 @@
 import { fetchCustomers, fetchInvoiceById } from "@/app/lib/data";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import EditInvoiceForm from "@/app/ui/invoices/edit-form";
+import { notFound } from "next/navigation";
 
 interface Props {
     params: {id: string};
@@ -12,6 +13,10 @@ export default async function Page ({params}: Props) {
         fetchInvoiceById(id),
         fetchCustomers()
     ])
+
+    if(!invoice) {
+        notFound();
+    }
     return (
         <main> 
             <Breadcrumbs breadcrumbs={[
