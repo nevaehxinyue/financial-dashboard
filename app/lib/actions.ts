@@ -8,7 +8,7 @@ import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 
 //Valudate formData before saving it to database
-const FormSchema = z.object({
+const InvoiceFormSchema = z.object({
   id: z.string(),
   //Set up friendly error messages to users
   customerId: z.string({
@@ -24,11 +24,19 @@ const FormSchema = z.object({
   date: z.string(),
 });
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
+const CustomerFormSchem = z.object({
+    id: z.string(),
+    name: z.string({
+        invalid_type_error: 'Please type customer name.'
+    }),
+    email: z.string(),
 
-const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+})
+const CreateInvoice = InvoiceFormSchema.omit({ id: true, date: true });
 
-export type State = {
+const UpdateInvoice = InvoiceFormSchema.omit({ id: true, date: true });
+
+export type InvoiceState = {
   errors?: {
     customerId?: string[];
     amount?: string[];
@@ -36,6 +44,15 @@ export type State = {
   };
   message?: string | null;
 };
+
+export type CustomerState = {
+    errors?: {
+        name?: string[];
+        email?: string[];
+        image_url?: string[];
+    };
+    message?: string | null;
+}
 
 export async function authenticate(
   prevState: string | undefined,
@@ -56,7 +73,12 @@ export async function authenticate(
     }
 }
 
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createCustomer(imageFile: File, prevState: CustomerState, formData: FormData){
+    // const validatedFields = 
+
+}
+
+export async function createInvoice(prevState: InvoiceState, formData: FormData) {
   // const rawFormData = Object.fromEntries(formData.entries())
   const validatedFields = CreateInvoice.safeParse({
     customerId: formData.get('customerId'),
@@ -98,7 +120,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
 
 export async function updateInvoice(
   id: string,
-  prevState: State,
+  prevState: InvoiceState,
   formData: FormData,
 ) {
   const validatedFields = UpdateInvoice.safeParse({

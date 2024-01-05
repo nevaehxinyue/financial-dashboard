@@ -1,6 +1,6 @@
 import { fetchCustomers } from "@/app/lib/data"
+import CreateCustomerForm from "@/app/ui/customers/create-form";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
-import Form from "@/app/ui/invoices/create-form";
 import { Metadata } from "next";
 
 const Page = async () => {
@@ -17,7 +17,7 @@ const Page = async () => {
                 }
                
             ]} />
-            <Form customers={customers}/>
+            <CreateCustomerForm />
 
         </main>
     )

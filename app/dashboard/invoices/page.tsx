@@ -9,13 +9,13 @@ import { Metadata } from 'next';
 import { Suspense } from 'react';
 
 
-interface Props {
+export interface SearchParams {
   searchParams: {
     query?: string;
     page?: string;
   };
 }
-const Page = async ({ searchParams }: Props) => {
+const Page = async ({ searchParams }: SearchParams) => {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   //Get the total number of pages of queried invoices
